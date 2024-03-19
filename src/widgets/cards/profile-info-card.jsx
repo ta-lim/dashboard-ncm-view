@@ -11,11 +11,26 @@ import getTimelineInfo from "@/handlers/getTimelineInfo";
 import { useContext } from "react";
 import { IsLogin } from "@/context";
 
+const getSubCategoryInfo = (subCategory) => {
+  switch (subCategory) {
+    case "1":
+      return { labelSubCategory: 'RPA', colorSubCategory: 'green' };
+    case "2":
+      return { labelSubCategory: 'City Net', colorSubCategory: 'purple' };
+    case "3":
+      return { labelSubCategory: 'EUC', colorSubCategory: 'orange' };
+    case "4":
+      return { labelSubCategory: 'Pelatihan', colorSubCategory: 'blue' };
+    default:
+      return { labelSubCategory: 'Unknown Status', colorSubCategory: 'gray' };
+  }
+};
+
 export function ProfileInfoCard({ title, description, details, action }) {
   const {labelStatus, colorStatus} = getStatusInfo(details['status'])
   const {labelTimeline, colorTimeline} = getTimelineInfo(details['timeline'])
+  const {labelSubCategory, colorSubCategory} = getSubCategoryInfo(details['subCategory'])
   const isLogin = useContext(IsLogin)
-
   
    return (
     <Card color="transparent" shadow={false}>
@@ -43,21 +58,23 @@ export function ProfileInfoCard({ title, description, details, action }) {
           <hr className="my-8 border-blue-gray-50" />
         ) : null}
         {details && (
-          <ul className="flex flex-col gap-4 p-0">
+          <ul className="flex flex-col gap-4 p-0 w-fit">
             {Object.keys(details).map((el, key) => {
               if(details[el] === null || details[el] === '') return <></>
-              if(el === 'status' || el === 'timeline') {
+              if(el === 'status' || el === 'timeline' || el === 'subCategory') {
                 return (
-              <li key={key} className="flex items-center gap-4">
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-semibold capitalize"
-                  >
-                  {el} 
-                </Typography>
+              <li key={key} className="flex gap-4">
+                <div className="w-24">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-semibold capitalize"
+                    >
+                    {el} 
+                  </Typography>
+                </div>
                 :<Chip
-                    color={el === 'status' ? colorStatus : colorTimeline} 
+                    color={el === 'status' ? colorStatus : el === 'subCategory' ? colorSubCategory : colorTimeline} 
                     size="sm" 
                     variant="gradient" 
                     value={
@@ -66,7 +83,7 @@ export function ProfileInfoCard({ title, description, details, action }) {
                       color="white"
                       className="font-medium capitalize leading-none items-center"
                       >
-                      {el === 'status' ? labelStatus : labelTimeline}        
+                      {el === 'status' ? labelStatus : el === 'subCategory' ? labelSubCategory : labelTimeline}        
                       </Typography>
                     } 
                     className="flex rounded-full flex-col items-center w-28"/>
@@ -74,21 +91,26 @@ export function ProfileInfoCard({ title, description, details, action }) {
                 )
               } 
             return(
-              <li key={key} className="flex items-center gap-4">
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-semibold capitalize"
-                >
-                  {el}
-                </Typography>
-                {typeof details[el] === "string" ? (
-                    <Typography
+              <li key={key} className="flex gap-4">
+                <div className="w-24 ">
+                  <Typography
                     variant="small"
-                    className="font-normal text-blue-gray-500"
+                    color="blue-gray"
+                    className="font-semibold capitalize"
                   >
-                    : {details[el]}
+                    {el}
                   </Typography>
+                </div>
+                {typeof details[el] === "string" ? (
+                    <div className="w-32">
+                    
+                        <Typography
+                        variant="small"
+                        className="font-normal text-blue-gray-500 whitespace-preline"
+                      >
+                        : {details[el]}
+                      </Typography>
+                    </div>  
                 ) : (
                   details[el]
                 )}

@@ -159,7 +159,7 @@ export function Home() {
             <table className="w-full min-w-[640px] table-auto">
               <thead>
                 <tr>
-                  {["Project", "PIC", "UIC","Description","CR No", "Status", 'Timeline'].map(
+                  {["Title", "PIC", "UIC","Description","CR No", "Status", 'Timeline'].map(
                     (el) => (
                       <th
                         key={el}
@@ -179,7 +179,7 @@ export function Home() {
               <tbody>
                 {data.map(
                   ({ id, title, picOne, picTwo, UIC, description, crNumber, status, timeline, updatedAt }, key) => {
-                    const className = `py-3 px-2 text-center ${
+                    const className = `py-3 px-3 text-center ${
                       key === data.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"
@@ -195,14 +195,17 @@ export function Home() {
                           <Link to={`./${id}`}>
                             <Typography
                               variant="small"
-                              className="text-xs font-medium text-blue-gray-600"
+                              className="text-xs font-bold text-blue-gray-900 text-center "
                               >
-                              {title}
+                              {title.length > 65
+                               ? `${title.slice(0, 65)} ...`
+                               : title
+                              }
                             </Typography>
                           </Link>
                         </td>
                         <td className={`${className}`}>
-                          <div className="flex gap-4 justify-center">
+                          <div className="flex flex-col gap-4 ml-3">
                             {/* <Avatar src={img} alt={picOne} size="sm" /> */}
                             <Chip
                               icon={
@@ -217,7 +220,7 @@ export function Home() {
                                   {picOne}
                                 </Typography>
                               }
-                              className="rounded-full py-1.5"
+                              className="rounded-full px-3 w-32"
                             />
                             {
                               (picTwo !== '' || picTwo.trim() !== '' )  ? 
@@ -235,7 +238,7 @@ export function Home() {
                                       {picTwo}
                                     </Typography>
                                   }
-                                  className="rounded-full py-1.5"
+                                  className="rounded-full py-1.5 w-32"
                                 />
                               : <></>
                             }
@@ -252,10 +255,10 @@ export function Home() {
                         <td className={` py-3 px-2 text-left `}>
                           <Typography
                             variant="small"
-                            className="text-xs font-medium text-blue-gray-600"
+                            className="text-xs font-medium text-blue-gray-600 text-justify"
                           >
-                             {description.length > 200
-                              ? `${description.slice(0, 200)}...`
+                             {description.length > 100
+                              ? `${description.slice(0, 100)} ...`
                               : description}
                           </Typography>
                         </td>
@@ -271,7 +274,6 @@ export function Home() {
                           <div className="w-10/12">
                               <Chip
                                 color={colorStatus} 
-                                size="md" 
                                 variant="gradient" 
                                 value={
                                   <Typography
@@ -282,13 +284,12 @@ export function Home() {
                                   {labelStatus}        
                                   </Typography>
                                 } 
-                                className="flex rounded-full flex-col items-center"/>
+                                className="flex rounded-full flex-col items-center w-32"/>
                           </div>
                         </td>
                         <td className={className}>
                           <Chip
                             color={colorTimeline} 
-                            size="md" 
                             variant="gradient" 
                             value={
                               <Typography
@@ -299,45 +300,28 @@ export function Home() {
                               {labelTimeline}        
                               </Typography>
                             } 
-                            className="flex rounded-full flex-col items-center"/>
+                            className="flex rounded-full flex-col items-center w-32"/>
                         </td>
-
                         {
-                          isLogin &&
-                          <td className={` flex flex-col gap-2 ${className}`}>
-                          <Typography
-                                variant="small"
-                                color='black'
-                                className="font-medium capitalize leading-none"
-                                >
-                            {dateUtc.toDateString()}
+                          // isLogin &&
+                          // <td className={` flex flex-col gap-2 ${className}`}>
+                          // <Typography
+                          //       variant="small"
+                          //       color='black'
+                          //       className="font-medium capitalize leading-none"
+                          //       >
+                          //   {dateUtc.toDateString()}
 
-                                {/* {dateUtc.toDateString()}         */}
-                                </Typography>
-                          <Typography
-                                variant="small"
-                                color='black'
-                                className="font-medium capitalize leading-none"
-                                >
-                            {dateUtc.toTimeString().slice(0,8)}
-
-                                {/* {dateUtc.toDateString()}         */}
-                                </Typography>
-                            {/* <Chip
-                              color={'gray'} 
-                              size="md" 
-                              variant="gradient" 
-                              value={
-                                <Typography
-                                variant="small"
-                                color="white"
-                                className="font-medium capitalize leading-none"
-                                >
-                                {dateUtc.toDateString()}        
-                                </Typography>
-                              } 
-                              className="flex rounded-full flex-col items-center"/> */}
-                          </td>
+                          //       {/* {dateUtc.toDateString()}         */}
+                          //       </Typography>
+                          // <Typography
+                          //       variant="small"
+                          //       color='black'
+                          //       className="font-medium capitalize leading-none"
+                          //       >
+                          //   {dateUtc.toTimeString().slice(0,8)}
+                          //       </Typography>
+                          // </td>
                         }
                       </tr>
                     );

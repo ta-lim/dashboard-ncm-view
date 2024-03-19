@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Select, Option, Textarea } from "@material-tailwind/react";
+import { Button, Select, Option, Textarea, Input } from "@material-tailwind/react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import createData from "@/api/activity/createData";
 import getDetail from "@/api/activity/getDetail";
@@ -77,87 +77,101 @@ export function ProjectForm() {
   return (
     isLogin ? (
     <form onSubmit={handleSubmit} className="your-form-classname">
-      <div className="mb-3">
-        <label htmlFor="title" className="px-4">
-          Title:
-        </label>
-        <input
-          type="text"
+      <div className="flex mb-3 w-2/5">
+        <div className="flex w-36 justify-start items-end">
+          <label htmlFor="title" className="px-4">
+            Title
+          </label>
+        </div>
+        <Input
+          placeholder="Title"
+          rows={1}
           id="title"
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="your-input-classname"
+          variant="standard"
         />
       </div>
-      <div className="flex items-center mb-3">
-        <label htmlFor="description" className=" px-4">
-          Description:
-        </label>
+      <div className="flex mb-3">
+        <div className="flex w-32 justify-start items-start mt-4">
+          <label htmlFor="description" className=" px-4 ">
+            Description
+          </label>
+        </div>
         <Textarea
-          variant="static"
+          variant="standard"
           placeholder="Description"
           rows={10}
           id="description"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className=" h-48 w-96"
+          // className=" h-48 w-96"
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="picOne" className="px-4">
-          PIC 1 :
-        </label>
-        <input
-          type="text"
+      <div className=" flex mb-3 w-2/5">
+        <div className="flex w-36 justify-start items-end">
+          <label htmlFor="picOne" className="px-4">
+            PIC 1 
+          </label>
+        </div>
+        <Input
+          placeholder="PIC 1"
           id="picOne"
           name="picOne"
           value={formData.picOne}
           onChange={handleChange}
-          className="your-input-classname"
+          variant="standard"
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="picTwo" className="px-4">
-          PIC 2 :
-        </label>
-        <input
-          type="text"
+      <div className="flex mb-3 w-2/5">
+        <div className="flex w-36 justify-start items-end">
+          <label htmlFor="picTwo" className="px-4">
+            PIC 2
+          </label>
+        </div>
+        <Input
+          placeholder="PIC 2"
+          rows={1}
           id="picTwo"
           name="picTwo"
           value={formData.picTwo}
           onChange={handleChange}
-          className="your-input-classname"
+          variant="standard"
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="crNumber" className="px-4">
-          CrNumber :
-        </label>
-        <input
-          type="text"
+      <div className="flex mb-3 w-2/5">
+        <div className="flex w-36 justify-start items-end">
+          <label htmlFor="crNumber" className="px-4">
+            CrNumber
+          </label>
+        </div>
+        <Input
+          placeholder="CR Number"
           id="crNumber"
           name="crNumber"
           value={formData.crNumber}
           onChange={handleChange}
-          className="your-input-classname"
+          variant="standard"
         />
       </div>
-      <div className="mb-3">
+      <div className="flex mb-3 w-2/5">
+      <div className="flex w-36 justify-start items-end">
         <label htmlFor="UIC" className="px-4">
-          UIC :
+          UIC
         </label>
-        <input
-          type="text"
+      </div>
+      <Input
+          placeholder="UIC"
           id="UIC"
           name="UIC"
           value={formData.UIC}
           onChange={handleChange}
-          className="your-input-classname"
+          variant="standard"
         />
       </div>
-      <div className="mb-3">
+      <div className="flex mb-3 w-2/5 md:w-3/5">
         <Select
           label="Timeline"
           value={formData.timeline}
@@ -170,7 +184,7 @@ export function ProjectForm() {
           <Option value="4">Q4 - 2024</Option>
         </Select>
       </div>
-      <div className="flex mb-3 items-center">
+      <div className="flex mb-3 items-center w-2/5 md:w-3/5">
         <Select
             label="Progress"
             value={formData.status}
@@ -189,7 +203,7 @@ export function ProjectForm() {
       </div>
       {
         isBusinessPlanPath &&
-          <div className="flex mb-3 items-center">
+          <div className="flex mb-3 items-center w-2/5 md:w-3/5">
             <Select
                 label="Sub Category"
                 value={formData.subCategory}
