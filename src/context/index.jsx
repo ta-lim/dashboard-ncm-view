@@ -66,7 +66,6 @@ export function useMaterialTailwindController() {
 }
 
 export const IsLogin = React.createContext(false);
-export const Username = React.createContext(false);
 
 MaterialTailwindControllerProvider.displayName = "/src/context/index.jsx";
 

@@ -11,7 +11,6 @@ export default async function login( data ){
 
   if(res) {
     if(res.status === 200) {
-      // console.log(res.data)
       return {status: "200", data: res.data}
     }
   }

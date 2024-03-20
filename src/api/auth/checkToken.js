@@ -1,6 +1,5 @@
 export default async function CheckToken(auth){
   try{
-    // console.log(process.env.PUBLIC_HOST)
     const res = await fetch(import.meta.env.VITE_HOST + '/' + import.meta.env.VITE_VERSION +'/primary/auth/check-token', 
     {
       method: 'GET',

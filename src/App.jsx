@@ -15,7 +15,6 @@ function App() {
       if(getCookie('token')){
         const res = await CheckToken(getCookie('token'))
         if(res){
-          console.log(res)
           if(res.status === '200'){
             setIsLogin(true)
           }

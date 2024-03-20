@@ -7,20 +7,13 @@ import {
   IconButton,
   Menu,
   MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Tooltip,
-  Progress,
   Chip,
   Button,
-  ButtonGroup,
+  Input
 } from "@material-tailwind/react";
 import {
   PlusIcon,
   UserCircleIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
 } from "@heroicons/react/24/outline";
 import { StatisticsCard } from "@/widgets/cards";
 import { statisticsCardsData } from "@/data";
@@ -31,12 +24,14 @@ import getTimelineInfo from "@/handlers/getTimelineInfo";
 import { IsLogin } from "@/context";
 import { getCookie, setCookie } from "cookies-next";
 import GetAnalyze from "@/api/activity/getAnalyze";
+import SearchData from "@/api/activity/searchData";
 
 
 export function Home() {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [dataAnalyze, setDataAnalyze] = useState([]);
+  const [dataSearch, setDataSearch] = useState('');
   const  isLogin  = useContext(IsLogin)
   const [spesificBusinessPlan, setSpesificBusinessPLan] =useState(0)
 
@@ -52,37 +47,43 @@ export function Home() {
 
   const projects = ['RPA', 'City Net', 'EUC', 'Pelatihan'];  
 
+  async function Search(){
+    const res = await SearchData(dataSearch)
+
+    if(res.status === '200'){
+      setDataSearch('')
+      setData(res.data)
+    }
+  }  
   
+  async function getAnalyze() {
+    const res = await GetAnalyze(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
+    if(res){
+      if(res.status === '200'){
+        setDataAnalyze(res.data)
+      }
+    }
+  }
+
+  async function getAllData() {
+    const res = await getData(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
+    console.log(res)
+    if(res){
+      if(res.status === '200'){
+        setData(res.data)
+      }
+    }
+  }
 
   useEffect(() => {
     if(!getCookie('isReload') && getCookie('token')){
       setCookie('isReload', 'true')
       window.location.reload();
     }
-    async function getAnalyze() {
-      console.log(import.meta.env.VITE_HOST)
-      const res = await GetAnalyze(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
-      // sole.log(res)
-      if(res){
-        if(res.status === '200'){
-          console.log(res)
-          setDataAnalyze(res.data)
-        }
-      }
-    }
-    getAnalyze()
 
-    async function getAllData() {
-      const res = await getData(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
-      console.log(res)
-      if(res){
-        if(res.status === '200'){
-
-          setData(res.data)
-        }
-      }
-    }
+    getAnalyze();
     getAllData();
+
   }, [isBusinessPlanPath, isActivityPath, isProjectPath, spesificBusinessPlan])
 
   const integratedData = statisticsCardsData.map(card => {
@@ -90,11 +91,12 @@ export function Home() {
     return { ...card, count: statusCount !== undefined ? statusCount : 0 };
   });
   return (
+    // <SearchBar.Provider value={{ searchData, setSearchData }}>
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-        {integratedData.map(({ icon, title, footer, color, label, count }) => (
+        {integratedData.map(({ icon, title, footer, color, label, count }, key) => (
           <StatisticsCard
-            key={title}
+            key={key}
             // {...rest}
             color={color}
             status={label}
@@ -112,10 +114,9 @@ export function Home() {
             floated={false}
             shadow={false}
             color="transparent"
-            className="m-0 flex items-center justify-start gap-4 p-6"
+            className="m-0 flex items-center gap-4 p-6"
           >
-            {isBusinessPlanPath ? (
-              <>
+              {/* <>
                 {projects.map((project, index) => (
                   <div key={index} className="cursor-pointer" onClick={() => setSpesificBusinessPLan(index)}>
                     <Button 
@@ -129,15 +130,46 @@ export function Home() {
                   </div>
                 ))}
               
-                </>
-              ) : (
-              <div className=" cursor-pointer">
-                <Typography variant="h6" color="blue-gray" className="mb-1">
-                  {category}
-                </Typography>
-              </div>
-            )
-            }
+                </> */}
+                <div className="flex justify-between items-center w-full flex-wrap">
+                  <div className=" flex flex-row flex-wrap items-center gap-4 grow w-64">
+                    {
+                      isBusinessPlanPath ? (
+                        projects.map((project, index) => (
+                          <div key={index} onClick={() => setSpesificBusinessPLan(index)}>
+                            <Button 
+                              color={index === spesificBusinessPlan ? 'dark' : 'white'}
+                              className="flex items-center capitalize w-24 h-10 justify-center whitespace-nowrap cursor-pointer" 
+                            >
+                              <Typography variant="h6" color={index === spesificBusinessPlan ? 'white' : 'black'} className="mb-1 text-center">
+                                {project} 
+                              </Typography>
+                            </Button>
+                          </div>
+                        ))
+                      ) : (
+                        <Typography variant="h6" color="blue-gray" className="mb-1">
+                          {category}
+                        </Typography>
+                      )
+                    }
+                  </div>
+                  <div className="md:mr-4 md:w-56">
+                    <Input  
+                      label="Search"
+                      id="search"
+                      name="search"
+                      value={dataSearch}
+                      onChange={(e) => setDataSearch(e.target.value)} 
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') Search();
+                      }}
+                    />
+                  </div>
+                </div>
+
+            
+            
             {
                 isLogin && 
             <Menu placement="left-start">
@@ -190,7 +222,7 @@ export function Home() {
                     dateUtc.setHours(dateUtc.getHours());
 
                     return (
-                      <tr key={key}>
+                      <tr key={key} className="even:bg-blue-gray-50/50">
                         <td className={`cursor-pointer w-60 ${className}`} onClick={() => {console.log('access profile ')}} >
                           <Link to={`./${id}`}>
                             <Typography
@@ -333,6 +365,7 @@ export function Home() {
         </Card>
       </div>
     </div>
+    // </SearchBar.Provider>
   );
 }
 

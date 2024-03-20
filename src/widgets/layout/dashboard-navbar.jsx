@@ -26,23 +26,17 @@ import {
   setOpenSidenav,
   IsLogin,
 } from "@/context";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { deleteCookie } from "cookies-next";
-
 
 export function DashboardNavbar() {
   const navigate = useNavigate();
   const isLogin = useContext(IsLogin);
-  // const [isLogin, setIsLogin] = useState(Login)
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
-
-  useEffect(() => {
-    console.log(isLogin)
-  },[])
-
+ 
   return (
     <Navbar
       color={fixedNavbar ? "white" : "transparent"}
@@ -83,9 +77,6 @@ export function DashboardNavbar() {
           </Typography>
         </div>
         <div className="flex items-center">
-          <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Search" />
-          </div>
           <IconButton
             variant="text"
             color="blue-gray"
