@@ -116,76 +116,63 @@ export function Home() {
             color="transparent"
             className="m-0 flex items-center gap-4 p-6"
           >
-              {/* <>
-                {projects.map((project, index) => (
-                  <div key={index} className="cursor-pointer" onClick={() => setSpesificBusinessPLan(index)}>
-                    <Button 
-                      color= {index === spesificBusinessPlan ? 'dark' : `white`}
-                      className="flex items-center gap-4 px-4 capitalize w-24 h-10 justify-center" 
-                      >
-                      <Typography variant="h6" color={index === spesificBusinessPlan ? 'white' : 'black' } className="mb-1 text-center">
-                        {project} 
-                      </Typography>
-                    </Button>
-                  </div>
-                ))}
-              
-                </> */}
-                <div className="flex justify-between items-center w-full flex-wrap">
-                  <div className=" flex flex-row flex-wrap items-center gap-4 grow w-64">
-                    {
-                      isBusinessPlanPath ? (
-                        projects.map((project, index) => (
-                          <div key={index} onClick={() => setSpesificBusinessPLan(index)}>
-                            <Button 
-                              color={index === spesificBusinessPlan ? 'dark' : 'white'}
-                              className="flex items-center capitalize w-24 h-10 justify-center whitespace-nowrap cursor-pointer" 
-                            >
-                              <Typography variant="h6" color={index === spesificBusinessPlan ? 'white' : 'black'} className="mb-1 text-center">
-                                {project} 
-                              </Typography>
-                            </Button>
-                          </div>
-                        ))
-                      ) : (
-                        <Typography variant="h6" color="blue-gray" className="mb-1">
-                          {category}
-                        </Typography>
-                      )
-                    }
-                  </div>
-                  <div className="md:mr-4 md:w-56">
-                    <Input  
-                      label="Search"
-                      id="search"
-                      name="search"
-                      value={dataSearch}
-                      onChange={(e) => setDataSearch(e.target.value)} 
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') Search();
-                      }}
-                    />
-                  </div>
-                </div>
+            <div className="flex items-center justify-between w-full gap-3 flex-wrap">
+              <div className={` flex flex-wrap items-center gap-4 ${isBusinessPlanPath ? 'md:flex-1' : '' }`}>
+                {
+                  isBusinessPlanPath ? (
+                    projects.map((project, index) => (
+                      <div key={index} onClick={() => setSpesificBusinessPLan(index)}>
+                        <Button 
+                          color={index === spesificBusinessPlan ? 'dark' : 'white'}
+                          className="flex items-center capitalize w-24 h-10 justify-center whitespace-nowrap cursor-pointer" 
+                        >
+                          <Typography variant="h6" color={index === spesificBusinessPlan ? 'white' : 'black'} className="mb-1 text-center">
+                            {project} 
+                          </Typography>
+                        </Button>
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                    <Typography variant="h6" color="blue-gray" className="mb-1">
+                      {category}
+                    </Typography>
+                    </div>
+                  )
+                }
+              </div>
+              {
+                      isLogin && 
+                        <div className={`flex items-start md:flex-1`}>
 
-            
-            
-            {
-                isLogin && 
-            <Menu placement="left-start">
-              <MenuHandler>
-                    <Link to={`./upload`}>
-                        <IconButton size="sm" variant="text" color="blue-gray" onClick={() => console.log("tambah")}>
-                          <PlusIcon
-                            strokeWidth={3}
-                            fill="currenColor"
-                            className="h-6 w-6"
-                            />
-                        </IconButton>
-                      </Link>                  
-              </MenuHandler>
-            </Menu>
-            }
+                          <Link to={`./upload`}>
+                              <IconButton size="sm" variant="text" color="blue-gray" onClick={() => console.log("tambah")}>
+                                <PlusIcon
+                                  strokeWidth={3}
+                                  fill="currenColor"
+                                  className="h-6 w-6"
+                                  />
+                              </IconButton>
+                            </Link>                  
+                        </div>
+                  // <Menu placement="left-start">
+                  //   <MenuHandler>
+                  //   </MenuHandler>
+                  // </Menu>
+              }  
+              <div className="md:mr-4 md:w-56">
+                <Input  
+                  label="Search"
+                  id="search"
+                  name="search"
+                  value={dataSearch}
+                  onChange={(e) => setDataSearch(e.target.value)} 
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') Search();
+                  }}
+                  />
+              </div>
+            </div>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">

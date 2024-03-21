@@ -76,7 +76,7 @@ export function DashboardNavbar() {
             {page}
           </Typography>
         </div>
-        <div className="flex items-center">
+        <div className="flex flex-row-reverse md:flex-row">
           <IconButton
             variant="text"
             color="blue-gray"
