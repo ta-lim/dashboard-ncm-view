@@ -171,6 +171,57 @@ export function ProjectForm() {
           variant="standard"
         />
       </div>
+      {
+        isBusinessPlanPath &&
+          <div className="flex mb-3 items-center w-2/5 md:w-3/5">
+            <Select
+                label="Sub Category"
+                value={formData.subCategory}
+                onChange={(value) => handleChange({ target: { name: "subCategory", value } })}
+                name="subCategory"
+                disabled={id ? true : false}
+              >
+                <Option value="1">RPA</Option>
+                <Option value="2">City Net</Option>
+                <Option value="3">EUC</Option>
+                <Option value="4">Pelatihan</Option>
+              </Select>
+          </div>
+      }
+      <div className={`flex mb-3 items-center w-2/5 md:w-3/5`}>
+        {
+          (formData.subCategory === '4' && isBusinessPlanPath) ? 
+            <Select
+            label="Progress"
+            value={formData.status}
+            onChange={(value) => handleChange({ target: { name: "status", value } })}
+            name="status"
+          >
+            
+              <Option value="8">Pending</Option>
+              <Option value="9">On Progress</Option>
+              <Option value="10">Done</Option>
+              
+            </Select>
+           :
+            <Select
+            label="Progress"
+            value={formData.status}
+            onChange={(value) => handleChange({ target: { name: "status", value } })}
+            name="status"
+          >
+            
+              <Option value="7">Requirement</Option>
+              <Option value="1">Design</Option>
+              <Option value="2">Development</Option>
+              <Option value="3">Testing</Option>
+              <Option value="4">Promote</Option>
+              <Option value="5">PIR</Option>
+              <Option value="6">Go Live</Option>
+            
+        </Select>
+        }
+      </div>
       <div className="flex mb-3 w-2/5 md:w-3/5">
         <Select
           label="Timeline"
@@ -183,46 +234,12 @@ export function ProjectForm() {
           <Option value="3">Q3 - 2024</Option>
           <Option value="4">Q4 - 2024</Option>
         </Select>
-      </div>
-      <div className="flex mb-3 items-center w-2/5 md:w-3/5">
-        <Select
-            label="Progress"
-            value={formData.status}
-            onChange={(value) => handleChange({ target: { name: "status", value } })}
-            name="status"
-            className="your-select-classname"
-          >
-            <Option value="7">Requirement</Option>
-            <Option value="1">Design</Option>
-            <Option value="2">Development</Option>
-            <Option value="3">Testing</Option>
-            <Option value="4">Promote</Option>
-            <Option value="5">PIR</Option>
-            <Option value="6">Go Live</Option>
-          </Select>
-      </div>
-      {
-        isBusinessPlanPath &&
-          <div className="flex mb-3 items-center w-2/5 md:w-3/5">
-            <Select
-                label="Sub Category"
-                value={formData.subCategory}
-                onChange={(value) => handleChange({ target: { name: "subCategory", value } })}
-                name="subCategory"
-                className="your-select-classname"
-              >
-                <Option value="1">RPA</Option>
-                <Option value="2">City Net</Option>
-                <Option value="3">EUC</Option>
-                <Option value="4">Pelatihan</Option>
-              </Select>
-          </div>
-      }
+      </div>     
       <Button type="submit" className="your-button-classname" >
         Submit
       </Button>
     </form>
-    ) : navigate('/project')
+    ) : id ?  navigate('./../..') : navigate('./..')
   );
 };
 

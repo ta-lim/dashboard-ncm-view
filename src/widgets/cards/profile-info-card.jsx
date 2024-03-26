@@ -31,7 +31,6 @@ export function ProfileInfoCard({ title, description, details, action }) {
   const {labelTimeline, colorTimeline} = getTimelineInfo(details['timeline'])
   const {labelSubCategory, colorSubCategory} = getSubCategoryInfo(details['subCategory'])
   const isLogin = useContext(IsLogin)
-  
    return (
     <Card color="transparent" shadow={false}>
       <CardHeader
@@ -74,19 +73,18 @@ export function ProfileInfoCard({ title, description, details, action }) {
                   </Typography>
                 </div>
                 :<Chip
-                    color={el === 'status' ? colorStatus : el === 'subCategory' ? colorSubCategory : colorTimeline} 
+                    color={el === 'subCategory' ? colorSubCategory : colorTimeline} 
                     size="sm" 
-                    variant="gradient" 
                     value={
                       <Typography
                       variant="small"
                       color="white"
-                      className="font-medium capitalize leading-none items-center"
+                      className="font-medium capitalize leading-none items-center "
                       >
                       {el === 'status' ? labelStatus : el === 'subCategory' ? labelSubCategory : labelTimeline}        
                       </Typography>
                     } 
-                    className="flex rounded-full flex-col items-center w-28"/>
+                    className={`flex rounded-full flex-col items-center w-28 ${el === 'status' ? colorStatus : el === 'subCategory' ? colorSubCategory : colorTimeline}`}/>
                   </li>
                 )
               } 

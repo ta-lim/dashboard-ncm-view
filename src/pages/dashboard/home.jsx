@@ -226,7 +226,7 @@ export function Home() {
                         <td className={`${className}`}>
                           <div className="flex flex-col gap-4 ml-3">
                             {/* <Avatar src={img} alt={picOne} size="sm" /> */}
-                            <Chip
+                            <Chip                            
                               icon={
                                 <UserCircleIcon />
                               }
@@ -239,25 +239,24 @@ export function Home() {
                                   {picOne}
                                 </Typography>
                               }
-                              className="rounded-full px-3 w-32"
+                              className="rounded-full px-3 w-32 bg-orange-700"
                             />
                             {
                               (picTwo !== '' || picTwo.trim() !== '' )  ? 
                                 <Chip
-                                  color='amber'
                                   icon={
                                     <UserCircleIcon />
                                   }
                                   value={
                                     <Typography
                                       variant="small"
-                                      color='black'
+                                      color='white'
                                       className="font-medium capitalize leading-none"
                                     >
                                       {picTwo}
                                     </Typography>
                                   }
-                                  className="rounded-full py-1.5 w-32"
+                                  className="rounded-full py-1.5 w-32 bg-teal-700"
                                 />
                               : <></>
                             }
@@ -292,8 +291,6 @@ export function Home() {
                         <td className={className}>
                           <div className="w-10/12">
                               <Chip
-                                color={colorStatus} 
-                                variant="gradient" 
                                 value={
                                   <Typography
                                   variant="small"
@@ -303,13 +300,12 @@ export function Home() {
                                   {labelStatus}        
                                   </Typography>
                                 } 
-                                className="flex rounded-full flex-col items-center w-32"/>
+                                className={`flex rounded-full flex-col items-center w-32 ${colorStatus}`}/>
                           </div>
                         </td>
                         <td className={className}>
                           <Chip
-                            color={colorTimeline} 
-                            variant="gradient" 
+                            color={'blue-gray'} 
                             value={
                               <Typography
                               variant="small"
@@ -319,7 +315,7 @@ export function Home() {
                               {labelTimeline}        
                               </Typography>
                             } 
-                            className="flex rounded-full flex-col items-center w-32"/>
+                            className={`flex rounded-full flex-col items-center w-32`}/>
                         </td>
                         {
                           // isLogin &&

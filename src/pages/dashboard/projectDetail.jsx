@@ -89,9 +89,9 @@ export function ProjectDetail() {
                 "PIC 2": data.picTwo,
                 crNumber: data.crNumber,
                 UIC: data.UIC,
-                timeline: data.timeline,
-                status: data.status,
                 subCategory: data.subCategory,
+                status: data.status,
+                timeline: data.timeline,
               }}
               action={
                 <>
