@@ -8,15 +8,12 @@ import {
 } from "@material-tailwind/react";
 import { setCookie } from "cookies-next";
 import { useState } from "react";
-// import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 
 
 export function SignIn() {
   const navigate = useNavigate();
-
-  // const [ cookies, setCookie] = useCookies(['token', 'refreshToken'])
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -45,7 +42,6 @@ export function SignIn() {
           }else{
             setCookie('token', res.data)
             console.log(res.data)
-            // setConte
           }
           navigate( '/project');
         }

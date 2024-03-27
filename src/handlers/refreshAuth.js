@@ -1,20 +1,20 @@
 import RefreshToken from "@/api/auth/refreshToken";
-import { Cookies } from "react-cookie";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
+
+
 
 export async function getNewToken(event) {
-  const cookie = new Cookies()
-  const res = await RefreshToken(cookie.get('token'), cookie.get('refreshToken'));
+  const res = await RefreshToken(getCookie('token'), getCookie('refreshToken'));
 
   if(res.status === '200'){
-    cookie.set('token', res.data.token)
-    cookie.set('refreshToken', res.data.refreshToken)
+    setCookie('token', res.data.token)
+    setCookie('refreshToken', res.data.refreshToken)
 
     event();
     return;
   }else{
-    cookie.remove('token');
-    cookie.remove('refreshToken');
-
+    deleteCookie('token');
+    deleteCookie('refreshToken');
     return;
   }
 }

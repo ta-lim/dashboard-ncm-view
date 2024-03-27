@@ -24,6 +24,7 @@ import { Link,useNavigate,useParams } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
 import getDetail from "@/api/activity/getDetail";
 import deleteData from "@/api/activity/deleteData";
+import { getCookie } from "cookies-next";
 
 export function ProjectDetail() {
   const [data, setData] = useState([]);
@@ -31,7 +32,7 @@ export function ProjectDetail() {
   const navigate = useNavigate();
   
   const  deleteProject = async () => {
-    const res = await deleteData( id , cookies.get('token') )
+    const res = await deleteData( id , getCookie('token') )
 
     if(res) {
       if(res.status === '200'){
@@ -99,7 +100,7 @@ export function ProjectDetail() {
                   <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" onClick={() => navigate(`../${category}/edit/${id}`)}/>
                 </Tooltip>
                 <Tooltip content="Delete Project" >
-                  <TrashIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" onClick={deleteProject }/>
+                  <TrashIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" onClick={() => deleteProject() }/>
                 </Tooltip>
                 </>
               }

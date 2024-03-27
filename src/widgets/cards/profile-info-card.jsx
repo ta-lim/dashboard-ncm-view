@@ -45,7 +45,7 @@ export function ProfileInfoCard({ title, description, details, action }) {
         {isLogin && action}
       </CardHeader>
       <CardBody className="p-0">
-        {description && (
+        { (description && details['subCategory'] !== '4') && (
           <Typography
             variant="small"
             className="font-normal text-blue-gray-500"

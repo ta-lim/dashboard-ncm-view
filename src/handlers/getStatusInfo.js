@@ -1,7 +1,7 @@
 export const getStatusInfo = (status) => {
   switch (status) {
     case "1":
-      return { labelStatus: 'Design', colorStatus: 'bg-yellow-400' };
+      return { labelStatus: 'Design', colorStatus: 'bg-yellow-700' };
     case "2":
       return { labelStatus: 'Development', colorStatus: 'bg-light-blue-400' };
     case "3":
@@ -17,7 +17,7 @@ export const getStatusInfo = (status) => {
     case "8":
       return { labelStatus: 'Pending', colorStatus: 'bg-red-500'};
     case "9":
-      return { labelStatus: 'On Progress', colorStatus: 'bg-yellow-400'};
+      return { labelStatus: 'On Progress', colorStatus: 'bg-yellow-700'};
     case "10":
       return { labelStatus: 'Done', colorStatus: 'bg-green-500'}
     default:
