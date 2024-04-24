@@ -9,11 +9,13 @@ import {
   MenuHandler,
   Chip,
   Button,
-  Input
+  Input,
+  Select
 } from "@material-tailwind/react";
 import {
   PlusIcon,
   UserCircleIcon,
+  DocumentArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { StatisticsCard } from "@/widgets/cards";
 import { statisticsCardsData } from "@/data";
@@ -25,13 +27,16 @@ import { IsLogin } from "@/context";
 import { getCookie, setCookie } from "cookies-next";
 import GetAnalyze from "@/api/activity/getAnalyze";
 import SearchData from "@/api/activity/searchData";
+import downloadXls from "@/api/activity/downloadXls";
 
 
 export function Home() {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [dataAnalyze, setDataAnalyze] = useState([]);
+  const [dataAnalyzeRank, setDataAnalyzeRank] = useState([]);
   const [dataSearch, setDataSearch] = useState('');
+  const [rowToggleStatus, setRowToggleStatus] = useState({});
   const  isLogin  = useContext(IsLogin)
   const [spesificBusinessPlan, setSpesificBusinessPLan] =useState(0)
 
@@ -47,6 +52,13 @@ export function Home() {
 
   const projects = ['RPA', 'City Net', 'EUC', 'Pelatihan'];  
 
+  const toggleRowStatus = (rowId) => {
+    setRowToggleStatus(prevState => ({
+      ...prevState,
+      [rowId]: !prevState[rowId] // Toggle the status for the specified row
+    }));
+  };
+
   async function Search(){
     const res = await SearchData(dataSearch)
 
@@ -60,14 +72,14 @@ export function Home() {
     const res = await GetAnalyze(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
     if(res){
       if(res.status === '200'){
-        setDataAnalyze(res.data)
+        setDataAnalyze(res.data.summary)
+        setDataAnalyzeRank(res.data.summaryRank)
       }
     }
   }
 
   async function getAllData() {
     const res = await getData(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1",isBusinessPlanPath ? (spesificBusinessPlan + 1) : '')
-    console.log(res)
     if(res){
       if(res.status === '200'){
         setData(res.data)
@@ -85,16 +97,16 @@ export function Home() {
     getAllData();
 
   }, [isBusinessPlanPath, isActivityPath, isProjectPath, spesificBusinessPlan])
-
   const integratedData = statisticsCardsData.map(card => {
     const statusCount = dataAnalyze[card.status];
-    return { ...card, count: statusCount !== undefined ? statusCount : 0 };
+    const statusRankCount = dataAnalyzeRank[card.status];
+    return { ...card, count: statusCount ?? 0, rank: statusRankCount ?? {}  };
   });
   return (
     // <SearchBar.Provider value={{ searchData, setSearchData }}>
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-        {integratedData.map(({ icon, title, footer, color, label, count }, key) => (
+        {integratedData.map(({ icon, title, footer, color, label, count, rank }, key) => (
           <StatisticsCard
             key={key}
             // {...rest}
@@ -102,6 +114,7 @@ export function Home() {
             status={label}
             title={title}
             count={count}
+            rank= {rank}
             icon={React.createElement(icon, {
               className: "w-6 h-6 text-white",
             })}
@@ -142,7 +155,8 @@ export function Home() {
                 }
               </div>
               {
-                      isLogin && 
+                      isLogin &&
+                      <>
                         <div className={`flex items-start md:flex-1`}>
 
                           <Link to={`./upload`}>
@@ -155,6 +169,20 @@ export function Home() {
                               </IconButton>
                             </Link>                  
                         </div>
+                        {/* <div className={`flex items-start md:flex-1`}> */}
+
+                          <div onClick={() => downloadXls(isBusinessPlanPath? "3" : isActivityPath ? "2" : "1", getCookie('token'))} className="">
+                              <IconButton size="sm" variant="text" color="blue-gray">
+                                <DocumentArrowDownIcon
+                                  strokeWidth={2}
+                                  // fill="currenColor"
+                                  className="h-6 w-6"
+                                  />
+                              </IconButton>
+                            </div>                  
+                        {/* </div> */}
+
+                      </> 
                   // <Menu placement="left-start">
                   //   <MenuHandler>
                   //   </MenuHandler>
@@ -289,19 +317,42 @@ export function Home() {
                           </Typography>
                         </td>
                         <td className={className}>
-                          <div className="w-10/12">
-                              <Chip
-                                value={
-                                  <Typography
-                                  variant="small"
-                                  color="white"
-                                  className="font-medium capitalize leading-none items-center"
-                                  >
-                                  {labelStatus}        
-                                  </Typography>
-                                } 
-                                className={`flex rounded-full flex-col items-center w-32 ${colorStatus}`}/>
-                          </div>
+                          {
+                            rowToggleStatus[key] ? (
+                            <Select
+                              label="Sub Category"
+                              value={labelStatus}
+                              // onChange={(value) => handleChange({ target: { name: "subCategory", value } })}
+                              name="subCategory"
+                              disabled={id ? true : false}
+                            >
+                              <Option value="1">RPA</Option>
+                              <Option value="2">City Net</Option>
+                              <Option value="3">EUC</Option>
+                              <Option value="4">Pelatihan</Option>
+                            </Select>
+                            ) : (
+
+                              <div className="w-10/12 cursor-pointer" onClick={() => {
+                                console.log('change status')
+                                toggleRowStatus(key);
+                              }
+                              } >
+                                  <Chip
+                                    value={
+                                      <Typography
+                                      variant="small"
+                                      color="white"
+                                      className="font-medium capitalize leading-none items-center"
+                                      >
+                                      {labelStatus}        
+                                      </Typography>
+                                    } 
+                                    className={`flex rounded-full flex-col items-center w-32 ${colorStatus}`}/>
+                              </div>
+
+                            )
+                          }
                         </td>
                         <td className={className}>
                           <Chip

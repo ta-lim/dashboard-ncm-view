@@ -60,10 +60,8 @@ export function ProjectForm() {
   useEffect(() => {
     async function getDetailData() {
       const res = await getDetail(id)
-      console.log(res)
       if(res){
         if(res.status === '200'){
-          console.log(res)
           setFormData(res.data)
         }
       }
@@ -77,6 +75,23 @@ export function ProjectForm() {
   return (
     isLogin ? (
     <form onSubmit={handleSubmit} className="your-form-classname">
+      {
+        isBusinessPlanPath &&
+          <div className="flex mb-3 items-center w-1/5 md:w-3/5">
+            <Select
+                label="Sub Category"
+                value={formData.subCategory}
+                onChange={(value) => handleChange({ target: { name: "subCategory", value } })}
+                name="subCategory"
+                disabled={id ? true : false}
+              >
+                <Option value="1">RPA</Option>
+                <Option value="2">City Net</Option>
+                <Option value="3">EUC</Option>
+                <Option value="4">Pelatihan</Option>
+              </Select>
+          </div>
+      }
       <div className="flex mb-3 w-2/5">
         <div className="flex w-36 justify-start items-end">
           <label htmlFor="title" className="px-4">
@@ -157,11 +172,11 @@ export function ProjectForm() {
         />
       </div>
       <div className="flex mb-3 w-2/5">
-      <div className="flex w-36 justify-start items-end">
-        <label htmlFor="UIC" className="px-4">
-          UIC
-        </label>
-      </div>
+        <div className="flex w-36 justify-start items-end">
+          <label htmlFor="UIC" className="px-4">
+            UIC
+          </label>
+        </div>
       <Input
           placeholder="UIC"
           id="UIC"
@@ -171,23 +186,6 @@ export function ProjectForm() {
           variant="standard"
         />
       </div>
-      {
-        isBusinessPlanPath &&
-          <div className="flex mb-3 items-center w-2/5 md:w-3/5">
-            <Select
-                label="Sub Category"
-                value={formData.subCategory}
-                onChange={(value) => handleChange({ target: { name: "subCategory", value } })}
-                name="subCategory"
-                disabled={id ? true : false}
-              >
-                <Option value="1">RPA</Option>
-                <Option value="2">City Net</Option>
-                <Option value="3">EUC</Option>
-                <Option value="4">Pelatihan</Option>
-              </Select>
-          </div>
-      }
       <div className={`flex mb-3 items-center w-2/5 md:w-3/5`}>
         {
           (formData.subCategory === '4' && isBusinessPlanPath) ? 

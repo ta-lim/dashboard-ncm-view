@@ -47,7 +47,6 @@ export function ProjectDetail() {
       const res = await getDetail(id)
       if(res){
         if(res.status === '200'){
-          console.log(res.data)
           setData(res.data)
         }
       }

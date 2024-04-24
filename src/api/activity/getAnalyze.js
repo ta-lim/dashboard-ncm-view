@@ -1,4 +1,4 @@
-export default async function GetAnalyze( category, subCategory="" ) {
+export default async function GetAnalyze( category, subCategory=null ) {
   try {
     const res = await fetch(import.meta.env.VITE_HOST + '/' + import.meta.env.VITE_VERSION +'/primary/dnm/analyze?category=' + category + '&subCategory=' + subCategory,
       {

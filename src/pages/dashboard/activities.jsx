@@ -75,13 +75,6 @@ console.log(data)
                 Projects
               </Typography>
             </div>
-            {/* {
-            contentFilter === 0 ? (
-              <Project />
-            ) : contentFilter === 1 ? (
-              <User />
-            ) : null
-          } */}
             {isBusinessPlanPath ? (
               <>
               <div className=" cursor-pointer">

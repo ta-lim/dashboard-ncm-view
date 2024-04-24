@@ -13,7 +13,6 @@ export default async function createData( data, auth ){
     ).then( (res) => res.json());
     
     if(res){
-      console.log(res)
       if(res.status === 200){
         return {status: '200', data: res};
       }

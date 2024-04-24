@@ -29,11 +29,8 @@ export function SignIn() {
 
   const handleSignIn = async () => {
 
-      console.log(formData)
       const res = await login(formData)
       if(res){
-        console.log(res.data.refreshToken)
-        console.log(res.data.token)
         if(res.status === '200' ){
           if(res.data.refreshToken){
             setCookie('token', res.data.token)
@@ -41,7 +38,6 @@ export function SignIn() {
 
           }else{
             setCookie('token', res.data)
-            console.log(res.data)
           }
           navigate( '/project');
         }
