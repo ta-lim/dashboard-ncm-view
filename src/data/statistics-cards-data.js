@@ -8,6 +8,18 @@ import {
 
 export const statisticsCardsData = [
   {
+    color: "gray",
+    icon: CheckBadgeIcon,
+    title: "Total",
+    label: " in Total",
+    status: "total",
+    footer: {
+      color: "text-green-500",
+      value: "+5%",
+      label: "than yesterday",
+    },
+  },
+  {
     color: "yellow",
     icon: ClockIcon,
     title: "Today's Status",
@@ -40,18 +52,6 @@ export const statisticsCardsData = [
     footer: {
       color: "text-red-500",
       value: "-2%",
-      label: "than yesterday",
-    },
-  },
-  {
-    color: "gray",
-    icon: CheckBadgeIcon,
-    title: "Total",
-    label: " in Total",
-    status: "total",
-    footer: {
-      color: "text-green-500",
-      value: "+5%",
       label: "than yesterday",
     },
   },
