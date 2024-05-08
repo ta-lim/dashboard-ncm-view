@@ -32,7 +32,7 @@ export const routes = [
       },
       {
         icon: <ChartBarIcon {...icon} />,
-        name: "Business Plan",
+        name: "Project Business Plan",
         path: "/business-plan",
         element: <Home />,
       },

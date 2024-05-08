@@ -1,6 +1,10 @@
 export default async function getData( category, subCategory = "" ) {
+  let url = `${import.meta.env.VITE_HOST}/${import.meta.env.VITE_VERSION}/primary/dnm?category=${category}`;
+  if (subCategory !== "-1") {
+      url += `&subCategory=${subCategory}`;
+  }
   try {
-    const res = await fetch(import.meta.env.VITE_HOST + '/' + import.meta.env.VITE_VERSION +'/primary/dnm/?category=' + category + '&subCategory=' + subCategory,
+    const res = await fetch(url,
       {
         method: "GET",
         headers: {

@@ -80,7 +80,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           {icon}
                           <Typography
                             color="inherit"
-                            className="font-medium capitalize"
+                            className="font-medium capitalize text-sm"
                           >
                             {name}
                           </Typography>

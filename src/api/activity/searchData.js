@@ -1,6 +1,11 @@
-export default async function SearchData( title ) {
+export default async function searchData( title, category, subCategory ) {
+
+  let url = `${import.meta.env.VITE_HOST}/${import.meta.env.VITE_VERSION}/primary/dnm/search?title=${title}&category=${category}`;
+  if (subCategory !== null) {
+      url += `&subCategory=${subCategory}`;
+  }
   try {
-    const res = await fetch(import.meta.env.VITE_HOST + '/' + import.meta.env.VITE_VERSION +'/primary/dnm/search?title=' + title ,
+    const res = await fetch(url,
       {
         method: "GET",
         headers: {

@@ -12,21 +12,12 @@ const chartConfig = (rank) => {
   const summaryRank = rank
   const categories = summaryRank.map(item => item.name); 
   const countArray = Object.values(summaryRank).map(obj => obj.count);
-  console.log(countArray)
   return {
     type: "bar",
     height: 200,
     series: [{
       data: countArray
     }],
-    // series: [
-    //   {
-    //     data:[1,2,3]
-    //   },
-    //   {
-    //     data:[4,5,6]
-    //   }
-    // ],
     options: {
       chart: {
         stacked: true,
