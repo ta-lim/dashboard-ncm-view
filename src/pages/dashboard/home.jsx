@@ -257,7 +257,9 @@ export function Home() {
   }, [isBusinessPlanPath, isActivityPath, isProjectPath, spesificBusinessPlan]);
 
   useEffect(() => {
-    getMasterData()
+    if(handleOpenFilter){
+      getMasterData()
+    }
   }, [handleOpenFilter])
 
   const integratedData = statisticsCardsData.map((card) => {
@@ -380,12 +382,15 @@ export function Home() {
                     </IconButton>
                   </div>
                   <Dialog
-                    size="xl"
+                    size="xxl"
                     open={handleOpenFilter}
                     handler={handleFilter}
                     className="bg-transparent shadow-none"
+                    dismiss={{
+                      escapeKey: true
+                    }}
                   >
-                    <Card className="mx-auto w-full">
+                    <Card className="mx-auto">
                       <CardBody className="flex flex-row gap-4 justify-center">
                         <Typography variant="h4" color="blue-gray">
                           Filter
@@ -396,7 +401,7 @@ export function Home() {
                             {Object.keys(masterDataFilter).map(key => (
                               <List key={key} className=" ">
                                 <Typography variant="h6" color="blue-gray" className="px-4">
-                                  {key.substring(10)}
+                                  {key.substring(10) === "PicOne" ? "PIC" : key.substring(10)}
                                 </Typography>
                                 {renderCheckboxes(masterDataFilter[key], Object.keys(masterDataFilter[key][0])[0], handleCheckboxToggle)}
                               </List>
@@ -411,7 +416,9 @@ export function Home() {
                             console.log(filters)
                             setSelectedValues({})
                             setHandleOpenFilter(!handleOpenFilter)
-                            searchFilterData(filters)
+                            if(filters.length !== 0) {
+                              searchFilterData(filters)
+                            }
                           }}>Search</Button>
                         </div>
 
