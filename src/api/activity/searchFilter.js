@@ -1,23 +1,26 @@
 export default async function searchFilter( data, category, subCategory ){
-  console.log(data)
+  let queryString = '';
+
+  // Iterate over each filter object in the input data
+  data.forEach(filter => {
+      // Extract the filter key and value
+      const key = Object.keys(filter)[0];
+      const value = filter[key][0];
+
+      // Append the filter to the query string
+      queryString += `&${key}=${value}`;
+  });
+
+  // Remove the leading '&' character from the query string
+  queryString = queryString.slice(1);
+  let url = `${import.meta.env.VITE_HOST}/${import.meta.env.VITE_VERSION}/primary/dnm/filter?${queryString}&category=${category}`
+  if (subCategory !== "-1") {
+    url += `&subCategory=${subCategory}`;
+  }
 
   try{
-      let queryString = '';
-
-        // Iterate over each filter object in the input data
-        data.forEach(filter => {
-            // Extract the filter key and value
-            const key = Object.keys(filter)[0];
-            const value = filter[key][0];
-
-            // Append the filter to the query string
-            queryString += `&${key}=${value}`;
-        });
-
-        // Remove the leading '&' character from the query string
-        queryString = queryString.slice(1);
       if(queryString !== ''){
-        const res = await fetch(`${import.meta.env.VITE_HOST}/${import.meta.env.VITE_VERSION}/primary/dnm/filter?${queryString}&category=${category}&subCategory=${subCategory}`,
+        const res = await fetch(url,
           {
             method: "GET",
             headers: {
