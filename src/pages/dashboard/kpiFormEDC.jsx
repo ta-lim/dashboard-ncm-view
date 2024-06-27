@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import getDetail from "@/api/activity/getDetail";
 import updateData from "@/api/activity/updateData";
 import { useContext } from "react";
-import { IsLogin } from "@/context";
+import { IsLogin, Role } from "@/context";
 import CheckToken from "@/api/auth/checkToken";
 import { getCookie } from "cookies-next";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -22,7 +22,8 @@ export function KpiFormEDC() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const isLogin = useContext(IsLogin)
+  const isLogin = useContext(IsLogin);
+  const isRole = useContext(Role);
   const [isCategory, setCategory] = useState()
   const [masterdataCategory, setMasterDataCategory] = useState([])
 
@@ -31,8 +32,23 @@ export function KpiFormEDC() {
   const isKPIEDCPath = location.pathname.includes("kpi-edc");
 
   const [formData, setFormData] = useState([]);
-  const [dateTrx, setDateTrx] = useState("");
   const categoryKpi = isImplementationEDCPath ? "categoryWilayahOperasional" : null;
+  const [dateTrx, setDateTrx] = useState("");
+  const today = dayjs()
+  const thisYear = dayjs().startOf('year')
+  let minDate, maxDate
+
+  
+  if (isRole === "super admin" || isRole === "admin") {
+    minDate = thisYear;
+    maxDate = today;
+  } else if (isRole === "staff") {
+    minDate = today.subtract(1, 'month'); // Example: users can select dates from the past month
+    maxDate = today;
+  } else {
+    minDate = null;
+    maxDate = null;
+  }
 
   const handleTitle = () => {
     for (const [key, value] of Object.entries(formTitles)) {
@@ -52,27 +68,6 @@ export function KpiFormEDC() {
     const formattedDate = dayjs(date).format('YYYY-MM-DD');
     setDateTrx(formattedDate);
   };
-
-  // const handleChange = (e, idx, field) => {
-  //   const { value } = e.target;
-  //   // console.log(e)
-  //   if(!isNaN(value)) {
-  //     setFormData(prevState => {
-  //       const newState = [...prevState];
-  //       if (!newState[idx]) {
-  //         newState[idx] = {
-  //           dateTrx: '',
-  //           itemEdc: '',
-  //           targetItemEdc: '',
-  //           [categoryKpi]: ''
-  //         };
-  //       }
-
-  //       newState[idx][field] = value;
-  //       return newState;
-  //     });
-  //   }
-  // };
 
   const handleChange = (e, idx, field) => {
     const { value } = e.target;
@@ -213,6 +208,8 @@ export function KpiFormEDC() {
             label="Month"
             format="MMMM YYYY"
             views={['month', 'year']}
+            minDate={minDate}
+            maxDate={maxDate}
             // disablePast
             onChange={handleDateChange}
           />

@@ -188,58 +188,10 @@ export function KpiFormAtm() {
     }
   }
 
-  // useEffect(() => {
-  //   setFormData(masterdataCategory.map(item => ({
-  //     dateTrx: '',
-  //     itemTrx: '',
-  //     itemTrxSLA: '',
-  //     [categoryKpi]: item.id
-  //   })));
-  // }, [masterdataCategory]);
-
   useEffect(() => {
     checkDatabyDate()
   }, [dateTrx])
 
-  // const dataKPI = async (date) => {
-  //   const res = getDataKPI(date)
-
-  //   console.log(res)
-  // }
-  // const handleChange = (e) => {
-  //   // console.log(formData.subCategory)
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({ ...prevData, [name]: value }));
-  //   setCategory(isBusinessPlanPath ? "3" : isActivityPath ? "2" : isProjectPath ? "1" : null)
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const isLogin = await CheckToken(getCookie('token'))
-  //   if (isLogin) {
-  //     const res = id ? await updateData(formData, getCookie('token')) : await createData(formData, getCookie('token'))
-  //     if (res) {
-  //       if (res.status === '200') {
-  //         navigate(id ? `./../..` : './../')
-  //       }
-  //     }
-  //   }
-  // };
-
-  // const MasterdataCategory = async () => {
-  //   if(isPaguKasPath || isSLAKasPath) return;
-  //   const res = await getMasterdataCategory(isRekonPath ? "0" : isRetailPath ? "1" : isWholesalePath ? "2" : isUptimeATMPath ? "3" : null)
-  //   if (res) {
-  //     if (res.status === '200') {
-  //       setMasterDataCategory(res.data)
-  //     }
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   setFormData((prevData) => ({ ...prevData, ['category']: isCategory }));
-  //   // MasterdataCategory()
-  // }, [])
 
   useEffect(() => {
     async function getDetailData() {
