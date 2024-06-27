@@ -7,7 +7,8 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-import { useMaterialTailwindController, setOpenSidenav } from "@/context";
+import { useMaterialTailwindController, setOpenSidenav, Role } from "@/context";
+import { useContext } from "react";
 
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -17,6 +18,16 @@ export function Sidenav({ brandImg, brandName, routes }) {
     white: "bg-white shadow-sm",
     transparent: "bg-transparent",
   };
+  const role = useContext(Role)
+  const filterRoutes = (routes) => {
+    return routes.map(section => ({
+      ...section,
+      pages: section.pages.filter(page => !page.allowedRoles || page.allowedRoles.includes(role))
+    }));
+  };
+
+  const filteredRoutes = filterRoutes(routes);
+
 
   return (
     <aside
@@ -47,7 +58,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
         </IconButton>
       </div>
       <div className="m-4">
-        {routes.map(({ layout, title, pages }, key) => (
+        {filteredRoutes.map(({ layout, title, pages }, key) => (
           <ul key={key} className="mb-4 flex flex-col gap-1 disabled">
             {title && (
               <li className="mx-3.5 mt-4 mb-2">

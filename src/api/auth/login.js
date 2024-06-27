@@ -13,5 +13,6 @@ export default async function login( data ){
     if(res.status === 200) {
       return {status: "200", data: res.data}
     }
+    return {status: res.status, err: res.err, message: res.message}
   }
 }

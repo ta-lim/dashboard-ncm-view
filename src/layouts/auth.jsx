@@ -6,6 +6,8 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { Navbar, Footer } from "@/widgets/layout";
+import { ToastContainer } from "react-toastify";
+
 import routes from "@/routes";
 
 export function Auth() {

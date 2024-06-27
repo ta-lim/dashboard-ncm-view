@@ -5,10 +5,15 @@ import {
   Checkbox,
   Button,
   Typography,
+  Alert,
 } from "@material-tailwind/react";
 import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -26,7 +31,6 @@ export function SignIn() {
       [name]: value,
     });
   };
-
   const handleSignIn = async () => {
 
       const res = await login(formData)
@@ -41,9 +45,23 @@ export function SignIn() {
           }
           navigate( '/project');
         }
+        if(res.err.type === "service"){
+          if(res.err.data.code === -1){
+            toast.error(res.message, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              // transition: Slide,
+              });
+          }
+        }
       }    
   };
-
   return (
     <section className="m-8 flex gap-4">
       <div className="w-full lg:w-3/5 mt-24">
@@ -160,6 +178,18 @@ export function SignIn() {
         />
       </div>
 
+      <ToastContainer
+          position="top-center"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="dark"
+          transition: Bounce   />
     </section>
   );
 }

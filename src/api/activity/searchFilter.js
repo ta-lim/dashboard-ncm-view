@@ -34,7 +34,6 @@ export default async function searchFilter( data, category, subCategory ){
         
         if(res){
           if(res.status === 200){
-            // console.log(res)
             return {status: '200', data: res.data};
           }
         }
