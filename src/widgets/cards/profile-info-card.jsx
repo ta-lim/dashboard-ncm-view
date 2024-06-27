@@ -28,7 +28,7 @@ const getSubCategoryInfo = (subCategory) => {
 
 export function ProfileInfoCard({ title, description, details, action }) {
   const {labelStatus, colorStatus} = getStatusInfo(details['status'])
-  const {labelTimeline, colorTimeline} = getTimelineInfo(details['timeline'])
+  const {label, color} = getTimelineInfo(details['timeline'])
   const {labelSubCategory, colorSubCategory} = getSubCategoryInfo(details['subCategory'])
   const isLogin = useContext(IsLogin)
    return (
@@ -73,7 +73,7 @@ export function ProfileInfoCard({ title, description, details, action }) {
                   </Typography>
                 </div>
                 :<Chip
-                    color={el === 'subCategory' ? colorSubCategory : colorTimeline} 
+                    color={el === 'subCategory' ? colorSubCategory : color} 
                     size="sm" 
                     value={
                       <Typography
@@ -81,10 +81,10 @@ export function ProfileInfoCard({ title, description, details, action }) {
                       color="white"
                       className="font-medium capitalize leading-none items-center "
                       >
-                      {el === 'status' ? labelStatus : el === 'subCategory' ? labelSubCategory : labelTimeline}        
+                      {el === 'status' ? labelStatus : el === 'subCategory' ? labelSubCategory : label}        
                       </Typography>
                     } 
-                    className={`flex rounded-full flex-col items-center w-28 ${el === 'status' ? colorStatus : el === 'subCategory' ? colorSubCategory : colorTimeline}`}/>
+                    className={`flex rounded-full flex-col items-center w-28 ${el === 'status' ? colorStatus : el === 'subCategory' ? colorSubCategory : color}`}/>
                   </li>
                 )
               } 

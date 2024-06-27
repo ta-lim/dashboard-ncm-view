@@ -1,7 +1,13 @@
 export * from "@/pages/dashboard/home";
 export * from "@/pages/dashboard/projectDetail";
-export * from "@/pages/dashboard/tables";
 export * from "@/pages/dashboard/notifications";
 export * from "@/pages/dashboard/projectform";
-export * from "@/pages/dashboard/activities";
-
+export * from "@/pages/dashboard/kpi"
+export * from "@/pages/dashboard/kpiAtm"
+export * from "@/pages/dashboard/kpiEdc"
+export * from "@/pages/dashboard/kpiForm"
+export * from "@/pages/dashboard/kpiFormAtm"
+export * from "@/pages/dashboard/kpiFormEDC"
+export * from "@/pages/dashboard/kpiFormHandlingComplain"
+export * from "@/pages/dashboard/kpiFormUpTimeATM"
+export * from "@/pages/dashboard/kpiHandlingComplain"

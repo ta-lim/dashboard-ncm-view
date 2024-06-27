@@ -121,19 +121,9 @@ export function Home() {
     // Perform mapping operation on the array
     return data.map((item) => ({
       ...item,
-      // statusInfo: getStatusInfo(item.status),
       timelineInfo: getTimelineInfo(item.timeline),
     }));
   };
-
-  // const remapData = (remapData) => {
-
-  //   return remapData.map((item) => ({
-  //     ...item,
-  //     // statusInfo: getStatusInfo(item.status),
-  //     timelineInfo: getTimelineInfo(item.timeline),
-  //   }));
-  // };
 
   async function search() {
     const res = await searchData(dataSearch, isBusinessPlanPath ? "3" : isActivityPath ? "2" : "1",
@@ -151,9 +141,7 @@ export function Home() {
       isBusinessPlanPath ? spesificBusinessPlan + 1 : "-1")
 
     if (res.status === "200") {
-      // console.log(remappedData)
       let remappedData = remapData(res.data);
-      console.log(res.data)
       setData(remappedData);
     }
   }
@@ -191,21 +179,15 @@ export function Home() {
 
     if (res.status === "200") {
       setMasterDataFilter(res.data)
-      console.log(masterDataFilter)
     }
   }
 
   const getLabel = (key, value) => {
-    // console.log(key)
     switch (key) {
       case 'status':
         return getStatusInfo(value).labelStatus;
       case 'timeline':
         return getTimelineInfo(value).label
-      // Add more cases for other keys as needed
-      // case 'masterDataPicOne':
-      //   // Handle logic for picOne keys if necessary
-      //   return `Label for ${value}`;
       default:
         return value;
     }
@@ -253,7 +235,6 @@ export function Home() {
 
     getAnalyze();
     getAllData();
-    // getMasterData();
   }, [isBusinessPlanPath, isActivityPath, isProjectPath, spesificBusinessPlan]);
 
   useEffect(() => {
@@ -267,16 +248,13 @@ export function Home() {
     const statusRankCount = dataAnalyzeRank[card.status];
     return { ...card, count: statusCount ?? 0, rank: statusRankCount ?? {} };
   });
-  // console.log(data)
   return (
-    // <SearchBar.Provider value={{ searchData, setSearchData }}>
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
         {integratedData.map(
-          ({ icon, title, footer, color, label, count, rank }, key) => (
+          ({ icon, title, color, label, count, rank }, key) => (
             <StatisticsCard
               key={key}
-              // {...rest}
               color={color}
               status={label}
               title={title}
@@ -340,7 +318,6 @@ export function Home() {
                           size="sm"
                           variant="text"
                           color="blue-gray"
-                          onClick={() => console.log("tambah")}
                         >
                           <PlusIcon
                             strokeWidth={3}
@@ -368,7 +345,6 @@ export function Home() {
                       <IconButton size="sm" variant="text" color="blue-gray">
                         <DocumentArrowDownIcon
                           strokeWidth={2}
-                          // fill="currenColor"
                           className="h-6 w-6"
                         />
                       </IconButton>
@@ -413,7 +389,6 @@ export function Home() {
                             const filters = Object.keys(selectedValues).map(key => ({
                               [key]: Object.keys(selectedValues[key]).filter(value => selectedValues[key][value])
                             }));
-                            console.log(filters)
                             setSelectedValues({})
                             setHandleOpenFilter(!handleOpenFilter)
                             if(filters.length !== 0) {
@@ -494,17 +469,14 @@ export function Home() {
                           : "border-b border-blue-gray-50"
                         }`;
                       const { labelStatus, colorStatus } = getStatusInfo(status);
-                      // const {labelTimeline, colorTimeline} = getTimelineInfo(timeline)
                       const dateUtc = new Date(updatedAt);
                       dateUtc.setHours(dateUtc.getHours());
 
                       return (
                         <tr key={key} className="even:bg-blue-gray-50/50">
+                          
                           <td
                             className={`cursor-pointer w-60 ${className}`}
-                            onClick={() => {
-                              console.log("access profile ");
-                            }}
                           >
                             <Link to={`./${id}`}>
                               <Typography
@@ -590,8 +562,6 @@ export function Home() {
                                   toggleRowStatus(key);
                                 }}
                                 className="w-32"
-                                // onChange={(e) => console.log(e)}
-
                                 name="status"
                               >
                                 <Option value="7">Requirement</Option>
@@ -606,7 +576,6 @@ export function Home() {
                               <div
                                 className={`w-10/12 cursor-pointer`}
                                 onClick={() => {
-                                  console.log("change status");
                                   toggleRowStatus(key);
                                 }}
                               >
@@ -640,26 +609,6 @@ export function Home() {
                               className={`flex rounded-full flex-col items-center w-32`}
                             />
                           </td>
-                          {
-                            // isLogin &&
-                            // <td className={` flex flex-col gap-2 ${className}`}>
-                            // <Typography
-                            //       variant="small"
-                            //       color='black'
-                            //       className="font-medium capitalize leading-none"
-                            //       >
-                            //   {dateUtc.toDateString()}
-                            //       {/* {dateUtc.toDateString()}         */}
-                            //       </Typography>
-                            // <Typography
-                            //       variant="small"
-                            //       color='black'
-                            //       className="font-medium capitalize leading-none"
-                            //       >
-                            //   {dateUtc.toTimeString().slice(0,8)}
-                            //       </Typography>
-                            // </td>
-                          }
                         </tr>
                       );
                     },
@@ -670,7 +619,6 @@ export function Home() {
         </Card>
       </div>
     </div>
-    // </SearchBar.Provider>
   );
 }
 

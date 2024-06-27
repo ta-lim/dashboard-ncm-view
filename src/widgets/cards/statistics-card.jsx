@@ -14,7 +14,7 @@ const chartConfig = (rank) => {
   const countArray = Object.values(summaryRank).map(obj => obj.count);
   return {
     type: "bar",
-    height: 200,
+    height: 250,
     series: [{
       data: countArray
     }],
@@ -99,6 +99,101 @@ const chartConfig = (rank) => {
     },
   };
 };
+const chartConfigTotal = (rank) => {
+  // const summaryRank = rank
+  // const categories = summaryRank.map(item => item.name); 
+  // const countArray = Object.values(summaryRank).map(obj => obj.count);
+  return {
+    type: "bar",
+    height: 250,
+    series: rank.transformedData,
+    options: {
+      chart: {
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+      },
+      title: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#fdd835", "#e53935", "#43a047"],
+      plotOptions: {
+        bar: {
+          columnWidth: "40%",
+          borderRadius: 1,
+        },
+      },
+      xaxis: {
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        labels: {
+          show: true,
+          // style: {
+          //   colors: "#616161",
+          //   fontSize: "12px",
+          //   fontFamily: "inherit",
+          //   fontWeight: 400,
+          // },
+        },
+        // categories: [
+        //   "April",
+        //   "Christina",
+        //   "Rachmat",
+        //   "name"
+        // ],
+        categories: rank.sortedNames,
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+      },
+      grid: {
+        show: true,
+        borderColor: "#dddddd",
+        strokeDashArray: 8,
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+        padding: {
+          top: 5,
+          right: 20,
+        },
+      },
+      fill: {
+        opacity: 0.8,
+      },
+      tooltip: {
+        theme: "dark",
+        x:{
+
+        },
+        y:{
+          title: {
+            formatter: function (val, opt) {
+              return opt.w.globals.labels[opt.dataPointIndex]
+            }
+          }
+        },
+      },
+    },
+  };
+};
 
 
 
@@ -159,7 +254,7 @@ export function StatisticsCard({ color, icon, title, status, footer, count, rank
           {count}{status}
         </Typography>
         {
-          Object.keys(rank).length !== 0 && <Chart {...chartConfig(rank)} />      
+          Object.keys(rank).length !== 0 && <Chart {...title ==='Total' ? {...chartConfigTotal(rank)} : {...chartConfig(rank)}} />      
         }
       </CardBody>
       {footer && (

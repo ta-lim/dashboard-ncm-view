@@ -11,6 +11,12 @@ import routes from "@/routes";
 import { ProjectDetail } from "@/pages/dashboard";
 import { ProjectForm } from "@/pages/dashboard";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import KpiForm from "@/pages/dashboard/kpiForm";
+import KpiFormUpTimeATM from "@/pages/dashboard/kpiFormUpTimeATM";
+import KpiFormHandlingComplain from "@/pages/dashboard/kpiFormHandlingComplain";
+import KpiFormAtm from "@/pages/dashboard/kpiFormAtm";
+import KpiFormEDC from "@/pages/dashboard/kpiFormEDC";
+
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -39,7 +45,7 @@ export function Dashboard() {
         <Routes>
           {routes.map(
             ({ layout, pages }) =>
-              layout === "dashboard" &&
+              layout === "dnm-ncm" &&
               pages.map(({ path, element }) => (
                 <Route path={path} element={element} />
               ))
@@ -53,6 +59,13 @@ export function Dashboard() {
           <Route path="/business-plan/:id" element={<ProjectDetail />}/>
           <Route path="/business-plan/edit/:id" element={<ProjectForm />} />
           <Route path="/business-plan/upload" element={<ProjectForm />} />
+          <Route path="/kpi-rekon/upload/*" element={<KpiForm />} />
+          <Route path="/kpi-atm/upload/*" element={<KpiFormAtm />} />
+          <Route path="/kpi-atm/upload/uptime-atm" element={<KpiFormUpTimeATM />} />
+          <Route path="/kpi-complain/upload/*" element={<KpiFormHandlingComplain />} />
+          <Route path="/kpi-edc/upload/*" element={<KpiFormEDC />} />
+          {/* <Route path="/kpi-edc/upload/availibility-edc" element={<KpiFormEDC />} /> */}
+          {/* <Route path="/kpi-atm/upload/uptime-atm" element={<KpiFormUpTimeATM />} /> */}
         </Routes>
         <div className="text-blue-gray-600">
           <Footer />
