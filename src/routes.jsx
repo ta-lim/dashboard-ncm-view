@@ -1,12 +1,18 @@
 import {
   ClipboardDocumentListIcon,
   CalendarIcon,
-  ChartBarIcon
+  ChartBarIcon,
+  ArrowTrendingUpIcon,
+  UsersIcon
 } from "@heroicons/react/24/solid";
-import { Home, ProjectForm, ProjectDetail } from "@/pages/dashboard";
-import { SignIn, SignUp } from "@/pages/auth";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import Activities from "./pages/dashboard/activities";
+import { Home} from "@/pages/dashboard";
+import { SignIn } from "@/pages/auth";
+import Kpi from "./pages/dashboard/kpi";
+import KpiAtm from "./pages/dashboard/kpiAtm";
+import KpiEdc from "./pages/dashboard/kpiEdc";
+import KpiHandlingComplain from "./pages/dashboard/kpiHandlingComplain";
+import ManageUsers from "./pages/dashboard/manageUsers";
+
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -16,7 +22,7 @@ const path = ['project', 'activity', 'business-plan']
 
 export const routes = [
   {
-    layout: "dashboard",
+    layout: "dnm-ncm",
     pages: [
       {
         icon: <ClipboardDocumentListIcon {...icon} />,
@@ -36,25 +42,47 @@ export const routes = [
         path: "/business-plan",
         element: <Home />,
       },
+      {
+        icon: <ArrowTrendingUpIcon {...icon} />,
+        name: "KPI Rekon",
+        path: "/kpi-rekon",
+        element: <Kpi />,
+      },
+      {
+        icon: <ArrowTrendingUpIcon {...icon} />,
+        name: "KPI ATM CRM",
+        path: "/kpi-atm",
+        element: <KpiAtm />,
+      },
+      {
+        icon: <ArrowTrendingUpIcon {...icon} />,
+        name: "KPI Handling Complain",
+        path: "/kpi-complain",
+        element: <KpiHandlingComplain />,
+      },
+      {
+        icon: <ArrowTrendingUpIcon {...icon} />,
+        name: "KPI EDC Performance",
+        path: "/kpi-edc",
+        element: <KpiEdc />,
+      },
+      {
+        icon: <UsersIcon {...icon} />,
+        name: "Manage User",
+        path: "/manage-user",
+        element: <ManageUsers />,
+        allowedRoles: ["super admin"],
+      }
     ],
 
   },
   {
-    // title: "auth pages",
     layout: "auth",
     pages: [
       {
-        // icon: <CalendarIcon {...icon} />,
-        // name: "sign in",
         path: "/sign-in",
         element: <SignIn />,
       },
-      // {
-      //   // icon: <CalendarIcon {...icon} />,
-      //   // name: "sign up",
-      //   path: "/sign-up",
-      //   element: <SignUp />,
-      // },
     ],
   },
 ];
